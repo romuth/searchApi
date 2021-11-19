@@ -7,7 +7,7 @@ Models and necessary dto's.
 Using h2 database as a inmemory db.
 Implemented authorization and authentication.
 
-# requirements 
+# Requirements 
 
 It should be a simple java application based on Spring Boot framework.<br/>
  The application should have a REST API that allows users to search by address and get all addresses by coordinates.<br/>
