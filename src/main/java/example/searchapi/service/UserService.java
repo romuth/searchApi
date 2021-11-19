@@ -1,0 +1,11 @@
+package example.searchapi.service;
+
+import example.searchapi.model.User;
+
+public interface UserService {
+    User save(User user);
+
+    User getByLogin(String login);
+
+    User add(User user);
+}
