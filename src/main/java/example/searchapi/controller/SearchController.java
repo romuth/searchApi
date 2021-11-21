@@ -28,7 +28,7 @@ public class SearchController {
     @GetMapping("/search")
     public AddressDto find(@RequestParam String q) {
         String url = String.format("https://nominatim.openstreetmap.org/?addressdetails=1&q=%s&format=json&limit=1",
-                q.replace(",", "").replace(" +", "+"));
+                q.replace(",", "").replaceAll(" +", "+"));
         SearchRequestDto byAddress = httpClient.getByAddress(url);
         coordinateService.save(mapper.toModel(byAddress));
         return byAddress.getAddress();

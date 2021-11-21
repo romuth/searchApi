@@ -31,7 +31,6 @@ public class CustomHttpClient {
     private SearchRequestDto[] get(String url) {
         HttpGet request = new HttpGet(url);
         try (CloseableHttpResponse response = httpClient.execute(request)) {
-            HttpEntity entity = response.getEntity();
             return objectMapper
                     .readValue(response.getEntity().getContent(), SearchRequestDto[].class);
         } catch (Exception e) {
@@ -42,7 +41,6 @@ public class CustomHttpClient {
     private SearchRequestDto getAll(String url) {
         HttpGet request = new HttpGet(url);
         try (CloseableHttpResponse response = httpClient.execute(request)) {
-            HttpEntity entity = response.getEntity();
             return objectMapper
                     .readValue(response.getEntity().getContent(), SearchRequestDto.class);
         } catch (Exception e) {
