@@ -1,6 +1,7 @@
 package example.searchapi.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,5 +19,6 @@ public class AddressDto {
     private String state;
     private String postcode;
     private String country;
-    private String country_code;
+    @JsonProperty("country_code")
+    private String countryCode;
 }

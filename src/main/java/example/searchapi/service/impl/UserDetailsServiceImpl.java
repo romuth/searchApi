@@ -20,10 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userService.getByLogin(login);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
+        User user = userService.getByLogin(login).orElseThrow(() ->
+                new UsernameNotFoundException("User not found"));
         UserBuilder builder = withUsername(login);
         builder.password(user.getPassword());
         builder.roles(user.getRoles().stream()

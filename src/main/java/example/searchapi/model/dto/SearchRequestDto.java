@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchResponseDto {
+public class SearchRequestDto {
     private Double lat;
     private Double lon;
     private AddressDto address;

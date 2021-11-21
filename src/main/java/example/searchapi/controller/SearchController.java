@@ -1,7 +1,8 @@
 package example.searchapi.controller;
 
 import example.searchapi.model.Coordinate;
-import example.searchapi.model.dto.SearchResponseDto;
+import example.searchapi.model.dto.AddressDto;
+import example.searchapi.model.dto.SearchRequestDto;
 import example.searchapi.service.CoordinateService;
 import example.searchapi.service.mapper.CoordinateMapper;
 import example.searchapi.util.CustomHttpClient;
@@ -25,24 +26,23 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public SearchResponseDto[] find(@RequestParam String q) {
+    public AddressDto find(@RequestParam String q) {
         String url = String.format("https://nominatim.openstreetmap.org/?addressdetails=1&q=%s&format=json&limit=1",
                 q.replace(",", "").replace(" +", "+"));
-        SearchResponseDto[] searchResponseDtos =
-                httpClient.get(url);
-        coordinateService.save(mapper.toModel(searchResponseDtos[0]));
-        return searchResponseDtos;
+        SearchRequestDto byAddress = httpClient.getByAddress(url);
+        coordinateService.save(mapper.toModel(byAddress));
+        return byAddress.getAddress();
     }
 
     @GetMapping("/addresses")
-    public List<SearchResponseDto> getAll() {
+    public List<AddressDto> getAll() {
         List<Coordinate> all = coordinateService.getAll();
-        List<SearchResponseDto> list = new ArrayList<>();
+        List<AddressDto> list = new ArrayList<>();
         StringBuilder builder = new StringBuilder();
         for (Coordinate coordinate : all) {
             builder.append(String.format("https://nominatim.openstreetmap.org/reverse?format=json&lat=%s&lon=%s",
                     coordinate.getLat(), coordinate.getLon()));
-            list.add(httpClient.getAll(builder.toString()));
+            list.add(httpClient.getAllAddresses(builder.toString()));
             builder.delete(0, builder.length());
         }
         return list;

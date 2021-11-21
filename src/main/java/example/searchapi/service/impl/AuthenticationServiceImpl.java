@@ -25,4 +25,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setRoles(Set.of(roleService.getRoleByName("USER")));
         return userService.add(user);
     }
+
 }
